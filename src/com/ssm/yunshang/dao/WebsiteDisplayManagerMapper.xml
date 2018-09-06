@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:mapper的命名空间，一般使用mapper文件的全路径 -->
+<mapper namespace="com.ssm.yunshang.dao.WebsiteDisplayManagerMapper">
+
+<resultMap type="SellerBasicInfo" id="resultMap_SellerBasicInfo">
+<result property="SellerName" column="SellerName"/>
+<result property="SellerTrade" column="SellerTrade"/>
+<result property="SellerAddress" column="SellerAddress"/>
+<result property="SellerStar" column="SellerStar"/>
+<result property="SellerIntroduce" column="SellerIntroduce"/>
+<result property="SellerProvince" column="SellerProvince"/>
+<result property="SellerCity" column="SellerCity"/>
+<result property="SellerPhone" column="SellerPhone"/>
+<result property="SellerEmail" column="SellerEmail"/>
+<result property="ConsumeIntegralPercent" column="ConsumeIntegralPercent"/>
+<result property="SellerVipDiscountPercent" column="SellerVipDiscountPercent"/>
+</resultMap>
+
+<resultMap type="ProductDataInfo" id="resultMap_ProductDataInfo">
+<result property="ProductName" column="ProductName"/>
+<result property="ProductIntroduce" column="ProductIntroduce"/>
+<result property="ProductPrice" column="ProductPrice"/>
+<result property="ProductPicture" column="ProductPicture"/>
+</resultMap>
+
+<select id="QuerySellerBasicInfo" resultMap="resultMap_SellerBasicInfo" parameterType="sellerBasicInfo">
+select * from SellerBasicInfo where SellerTrade=#{sellerBasicInfo.SellerTrade} and SellerStar=#{sellerBasicInfo.SellerStar} and SellerCity=#{sellerBasicInfo.SellerCity}
+</select>
+
+<select id="QueryProductDataInfo" resultMap="resultMap_ProductDataInfo" parameterType="productDataInfo">
+select * from ProductDataInfo where SellerName=#{productDataInfo.SellerName}
+</select>
+
+
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:mapper的命名空间，一般使用mapper文件的全路径 -->
+<mapper namespace="com.ssm.yunshang.dao.OperationManagerMapper">
+
+<resultMap id="resultMap_OperationLogin" type="AccountInfo">
+<id property="AccountId" column="AccountId"/>
+<result property="AccountName" column="AccountName"/>
+<result property="AccountPassword" column="AccountPassword"/>
+</resultMap>
+
+<resultMap id="resultMap_OperationApplyInfo" type="ApplyInfo">
+<result property="ApplySellerName" column="ApplySellerName"/>
+<result property="ApplySellerTrade" column="ApplySellerTrade"/>
+<result property="ApplySellerAddress" column="ApplySellerAddress"/>
+<result property="ApplySellerStar" column="ApplySellerStar"/>
+<result property="ApplySellerIntroduce" column="ApplySellerIntroduce"/>
+<result property="ApplySellerProvince" column="ApplySellerProvince"/>
+<result property="ApplySellerCity" column="ApplySellerCity"/>
+<result property="ApplySellerPhone" column="ApplySellerPhone"/>
+<result property="ApplySellerEmail" column="ApplySellerEmail"/>
+<result property="ApplyConsumeIntegralPercent" column="ApplyConsumeIntegralPercent"/>
+<result property="ApplyVipDiscountPercent" column="ApplyVipDiscountPercent"/>
+<result property="ApplyStatus" column="ApplyStatus"/>
+</resultMap>
+
+<select id="OperationLogin" resultMap="resultMap_OperationLogin" parameterType="AccountInfo">
+select * from AccountInfo  where AccountName=#{AccountName} and AccountPassword=#{AccountPassword} 
+</select>
+
+<select id="OperationApplyInfo" resultMap="resultMap_OperationApplyInfo" parameterType="ApplyInfo">
+select * from ApplyInfo  limit #{page},2
+</select>
+
+<insert id="SellerAccountAssignment" parameterType="AccountInfo">
+insert into AccountInfo (AccountType,AccountName,AccountPassword,AccountStatus) values("商家",#{AccountName},#{AccountPassword},"未登陆")
+</insert>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+

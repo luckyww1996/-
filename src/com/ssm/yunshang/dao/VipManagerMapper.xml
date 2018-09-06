@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:mapper的命名空间，一般使用mapper文件的全路径 -->
+<mapper namespace="com.ssm.yunshang.dao.VipManagerMapper">
+
+<resultMap id="resultMap_VipLogin" type="AccountInfo">
+<id property="AccountId" column="AccountId"/>
+<result property="AccountType" column="AccountType"/>
+<result property="AccountName" column="AccountName"/>
+<result property="AccountPassword" column="AccountPassword"/>
+<result property="AccountStatus" column="AccountStatus"/>
+</resultMap>
+
+<resultMap id="resultMap_QueryVipBasicInfo" type="VipBasicInfo">
+<id property="VipCardNumber" column="VipCardNumber"/>
+<result property="SellerName" column="SellerName"/>
+<result property="IdCardNumber" column="IdCardNumber"/>
+<result property="VipName" column="VipName"/>
+<result property="VipSex" column="VipSex"/>
+<result property="VipPhone" column="VipPhone"/>
+<result property="VipAddress" column="VipAddress"/>
+<result property="VipEmail" column="VipEmail"/>
+</resultMap>
+
+<resultMap id="resultMap_QueryVipCardBalance" type="VipConsumeInfo">
+<id property="VipName" column="VipName"/>
+<result property="SellerName" column="SellerName"/>
+<result property="Balance" column="Balance"/>
+<result property="Integral" column="Integral"/>
+</resultMap>
+
+<select id="findVipByLogin" resultMap="resultMap_VipLogin" parameterType="AccountInfo">
+select * from AccountInfo  where AccountName=#{AccountName} and AccountPassword=#{AccountPassword} 
+</select>
+
+<update id="updateVipStatus" parameterType="AccountInfo">
+update AccountInfo set AccountStatus=#{AccountStatus} where AccountName=#{AccountName}
+</update>
+
+<update id="VipPasswordChange" parameterType="AccountInfo">
+update AccountInfo set AccountPassword=#{AccountPassword} where AccountName=#{AccountName}
+</update>
+
+<update id="UpdateVipBasicInfo" parameterType="VipBasicInfo">
+update VipBasicInfo set VipSex=#{VipSex},VipPhone=#{VipPhone},VipAddress=#{VipAddress},VipEmail=#{VipEmail} where VipName=#{VipName}
+</update>
+
+<select id="QueryVipBasicInfo" resultMap="resultMap_QueryVipBasicInfo" parameterType="VipBasicInfo">
+select * from VipBasicInfo  where VipName=#{VipName} 
+</select>
+
+<select id="QueryVipCardBalance" resultMap="resultMap_QueryVipCardBalance" parameterType="VipConsumeInfo">
+select * from VipConsumeInfo  where VipName=#{VipName} 
+</select>
+
+</mapper>

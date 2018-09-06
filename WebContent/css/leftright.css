@@ -1,0 +1,10 @@
+@charset "utf-8";
+/*具体功能模块中的左右布局样式*/
+.addContent{height:80px;font-size:24px;line-height:80px;}
+.sidebar{width:396px;padding:50px 0px 0px 100px;position:fixed;float:left;}
+.sidebar ul li{width:155px;height:55px;line-height:55px;text-align:center;border:1px solid #666666;}
+.bigbox{float:left;width:900px;padding-left:340px;background-image:url(../images/bg.jpg);background-attachment:fixed;background-position:top right;background-repeat:no-repeat;}
+.bigbox .bigtitle{height:80px;padding-top:20px;line-height:80px;font-size:20px;text-align:center;}
+.smallbox{border-left:1px solid #cccccc;border-right:1px solid #cccccc;width:670px;margin:0 auto;}
+.smallbox:last-child{border-left:1px solid #cccccc;border-right:1px solid #cccccc;border-bottom:1px solid #cccccc;width:670px;margin:0 auto;}
+.smallbox .smalltitle{height:45px;line-height:45px;background:#41c7db;text-align:center;}

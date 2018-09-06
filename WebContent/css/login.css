@@ -1,0 +1,11 @@
+@charset "utf-8";
+.addContent{height:80px;font-size:24px;line-height:80px;}
+.addContain{padding:0 15px 0 15px;} 
+.line{height:30px;border-bottom:1px solid black;text-align:right;}
+.main{width:1050px;margin:0 auto;padding-top:100px;}
+.main .imgs{float:left;width:650px;height:300px;}
+.main .login{float:right;width:275px;height:300px;border:1px solid black;}
+.addlogin{padding:50px 50px;box-sizing:border-box;color:#0099cc;}
+.in{width:124px;border:1px solid #cccccc;height:1.5em;line-height:1.5em;}
+.bluey{color:#ffffff;width:70px;background:#41c7db;border:1px solid #666666;text-align:center;height:2.5em;line-height:2.5em;vertical-align:middle;}
+form p{margin-bottom:30px;}

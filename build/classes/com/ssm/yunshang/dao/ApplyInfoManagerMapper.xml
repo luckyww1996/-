@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace命名空间，作用就是对sql进行分类化管理； 注意：使用mapper代理方法开发时，namespace指向同名的mapper接口类 -->
+<mapper namespace="com.ssm.yunshang.dao.ApplyInfoManagerMapper">
+
+<resultMap type="ApplyInfo" id="applyinfoResultMap">
+<result property="ApplySellerName" column="ApplySellerName"/>
+<result property="ApplySellerTrade" column="ApplySellerTrade"/>
+<result property="ApplySellerAddress" column="ApplySellerAddress"/>
+<result property="ApplySellerStar" column="ApplySellerStar"/>
+<result property="ApplySellerIntroduce" column="ApplySellerIntroduce"/>
+<result property="ApplySellerProvince" column="ApplySellerProvince"/>
+<result property="ApplySellerCity" column="ApplySellerCity"/>
+<result property="ApplySellerPhone" column="ApplySellerPhone"/>
+<result property="ApplySellerEmail" column="ApplySellerEmail"/>
+<result property="ApplyConsumeIntegralPercent" column="ApplyConsumeIntegralPercent"/>
+<result property="ApplyVipDiscountPercent" column="ApplyVipDiscountPercent"/>
+<result property="ApplyStatus" column="ApplyStatus"/>
+</resultMap>
+
+<resultMap id="sellerbasicinfoResultMap" type="SellerBasicInfo">
+<result column="SellerId" property="SellerId"/>
+<result column="SellerTrade" property="SellerTrade"/>
+<result column="SellerName" property="SellerName"/>
+<result column="SellerAddress" property="SellerAddress"/>
+<result column="SellerStar" property="SellerStar"/>
+<result column="SellerIntroduce" property="SellerIntroduce"/>
+<result column="SellerProvince" property="SellerProvince"/>
+<result column="SellerCity" property="SellerCity"/>
+<result column="SellerPhone" property="SellerPhone"/>
+<result column="SellerEmail" property="SellerEmail"/>
+<result column="ConsumeIntegralPercent" property="ConsumeIntegralPercent"/>
+<result column="SellerVipDiscountPercent" property="SellerVipDiscountPercent"/>
+</resultMap>
+
+<select id="queryApplyInfo" resultMap="applyinfoResultMap" parameterType="ApplyInfo">
+select * from ApplyInfo where ApplyStatus="未审核" limit #{startrow},#{length}
+</select>
+	
+<select id="SelectApplyInfoShenHe" resultMap="applyinfoResultMap" parameterType="ApplyInfo">
+select * from ApplyInfo  where ApplySellerName=#{ApplySellerName}
+</select>
+
+<!-- 申请信息审核 -->
+<update id="updateApplyInfoShenHe">
+UPDATE ApplyInfo SET ApplyStatus = #{result}  WHERE ApplySellerName = #{ApplySellerName}
+</update>
+
+<insert id="InsertApplyInfoShenHe" parameterType="ApplyInfo" >
+INSERT INTO SellerBasicInfo (SellerTrade,SellerName,SellerAddress,SellerStar,SellerIntroduce,SellerProvince,SellerCity,SellerPhone,SellerEmail,ConsumeIntegralPercent,SellerVipDiscountPercent)
+VALUES(#{ApplySellerTrade},#{ApplySellerName},#{ApplySellerAddress},#{ApplySellerStar},#{ApplySellerIntroduce},#{ApplySellerProvince},#{ApplySellerCity},#{ApplySellerPhone},#{ApplySellerEmail},#{ApplyConsumeIntegralPercent},#{ApplyVipDiscountPercent})
+</insert>
+	
+<!-- 查询结果的个数 -->
+<select id="queryApplyInfoCount" resultType="int">
+select count(*) from ApplyInfo 
+</select>
+
+<select id="querySellerBasicInfo" parameterType="SellerBasicInfo" resultMap="sellerbasicinfoResultMap">
+select * from SellerBasicInfo limit #{startrow},#{length} 
+</select>
+
+<update id="UpdateSellerBasicInfo">
+UPDATE SellerBasicInfo SET SellerTrade=#{sellerTrade},SellerName= #{sellerName},SellerAddress= #{sellerAddress},SellerStar= #{sellerStar},SellerIntroduce=#{sellerIntroduce},SellerProvince= #{sellerProvince},SellerCity= #{sellerCity},SellerPhone= #{sellerPhone},SellerEmail=#{sellerEmail},ConsumeIntegralPercent= #{consumeIntegralPercent},SellerVipDiscountPercent= #{consumeIntegralPercent} WHERE SellerId= #{sellerId} 
+</update>
+
+<select id="querySellerBasicInfoCount" resultType="int">
+select count(*) from SellerBasicInfo 
+</select>
+
+<select id="querySellerId" resultType="SellerBasicInfo">
+select * from SellerBasicInfo where SellerId= #{id} 
+</select>
+
+</mapper>
+
+

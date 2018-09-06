@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:mapper的命名空间，一般使用mapper文件的全路径 -->
+<mapper namespace="com.ssm.yunshang.dao.SellerManagerMapper">
+
+<resultMap id="resultMap_SellerLogin" type="AccountInfo">
+<id property="AccountId" column="AccountId"/>
+<result property="AccountType" column="AccountType"/>
+<result property="AccountName" column="AccountName"/>
+<result property="AccountPassword" column="AccountPassword"/>
+<result property="AccountStatus" column="AccountStatus"/>
+</resultMap>
+
+<resultMap type="SellerBasicInfo" id="resultMap_QuerySellerInfo">
+<id column="SellerId" property="SellerId"/>
+<result column="SellerName" property="SellerName"/>
+<result column="SellerTrade" property="SellerTrade"/>
+<result column="SellerAddress" property="SellerAddress"/>
+<result column="SellerStar" property="SellerStar"/>
+<result column="SellerIntroduce" property="SellerIntroduce"/>
+<result column="SellerProvince" property="SellerProvince"/>
+<result column="SellerCity" property="SellerCity"/>
+<result column="SellerPhone" property="SellerPhone"/>
+<result column="SellerEmail" property="SellerEmail"/>
+<result column="ConsumeIntegralPercent" property="ConsumeIntegralPercent"/>
+<result column="SellerVipDiscountPercent" property="SellerVipDiscountPercent"/>
+</resultMap>
+
+<resultMap id="resultMap_QueryVipCardBalance" type="VipConsumeInfo">
+<id property="VipName" column="VipName"/>
+<result property="SellerName" column="SellerName"/>
+<result property="Balance" column="Balance"/>
+<result property="Integral" column="Integral"/>
+</resultMap>
+
+<resultMap id="resultMap_QueryVipBasicInfo" type="VipBasicInfo">
+<id property="VipCardNumber" column="VipCardNumber"/>
+<result property="SellerName" column="SellerName"/>
+<result property="IdCardNumber" column="IdCardNumber"/>
+<result property="VipName" column="VipName"/>
+<result property="VipSex" column="VipSex"/>
+<result property="VipPhone" column="VipPhone"/>
+<result property="VipAddress" column="VipAddress"/>
+<result property="VipEmail" column="VipEmail"/>
+</resultMap>
+
+<insert id="SellerApply"> 
+insert into ApplyInfo (ApplySellerName,ApplySellerTrade,ApplySellerAddress,ApplySellerStar,ApplySellerIntroduce,ApplySellerProvince,ApplySellerCity,ApplySellerPhone,ApplySellerEmail,ApplyConsumeIntegralPercent,ApplyVipDiscountPercent,ApplyStatus)values (#{ApplySellerName},#{ApplySellerTrade},#{ApplySellerAddress},#{ApplySellerStar},#{ApplySellerIntroduce},#{ApplySellerProvince},#{ApplySellerCity},#{ApplySellerPhone},#{ApplySellerEmail},#{ApplyConsumeIntegralPercent},#{ApplyVipDiscountPercent},"未审核"); 
+</insert>
+
+<select id="Login" parameterType="AccountInfo" resultMap="resultMap_SellerLogin"> 
+select * from AccountInfo where AccountName=#{AccountName} and AccountPassword=#{AccountPassword}; 
+</select>
+
+<update id="updateStatus"> 
+update AccountInfo set AccountStatus=#{AccountStatus} where AccountName=#{AccountName} 
+</update>
+
+<insert id="Product"> 
+insert into ProductDataInfo (SellerName,ProductName,ProductIntroduce,ProductPrice,ProductPicture)values (#{SellerName},#{ProductName},#{ProductIntroduce},#{ProductPrice},#{ProductPicture}); 
+</insert>
+
+<insert id="VipInfo"> 
+insert into VipBasicInfo (VipCardNumber,SellerName,IdCardNumber,VipName,VipSex,VipPhone,VipAddress,VipEmail)values (#{VipCardNumber},#{SellerName},#{IdCardNumber},#{VipName},#{VipSex},#{VipPhone},#{VipAddress},#{VipEmail}); 
+</insert>
+
+<insert id="Register"> 
+insert into AccountInfo (AccountType,AccountName,AccountPassword,AccountStatus)values (#{AccountType},#{AccountName},#{AccountPassword},"未登陆"); 
+</insert>
+
+<select id="QueryInfo" parameterType="SellerBasicInfo" resultMap="resultMap_QuerySellerInfo"> 
+select * from SellerBasicInfo where SellerName=#{SellerName}; 
+</select>
+
+<update id="UpdateInfo"> 
+update SellerBasicInfo set SellerTrade=#{SellerTrade},SellerAddress=#{SellerAddress},SellerStar=#{SellerStar},SellerIntroduce=#{SellerIntroduce},SellerProvince=#{SellerProvince},SellerCity=#{SellerCity},SellerPhone=#{SellerPhone},SellerEmail=#{SellerEmail},ConsumeIntegralPercent=#{ConsumeIntegralPercent},SellerVipDiscountPercent=#{SellerVipDiscountPercent} where SellerName=#{SellerName} 
+</update>
+
+<!-- <select id="QueryName" resultType="string"> 
+select AccountName from AccountInfo where AccountType="会员"; 
+</select> -->
+
+<select id="Verify" resultType="string"> 
+select AccountType from AccountInfo where AccountName=#{VipName}; 
+</select>
+
+<select id="QueryVipCardBalance" resultMap="resultMap_QueryVipCardBalance" parameterType="VipConsumeInfo">
+select * from VipConsumeInfo  where VipName=#{VipName} and SellerName=#{SellerName}
+</select>
+
+<update id="UpdateVipConsumeInfo" parameterType="VipConsumeInfo">
+update VipConsumeInfo set Balance=Balance-#{Balance},Integral=Integral+#{Integral} where VipName=#{VipName}
+</update>
+
+<update id="UpdateIntegralInfo" parameterType="VipConsumeInfo">
+update VipConsumeInfo set Integral=Integral-#{Integral} where VipName=#{VipName}
+</update>
+
+<update id="UpdateBalanceInfo" parameterType="VipConsumeInfo">
+update VipConsumeInfo set Balance=Balance+#{Balance} where VipName=#{VipName}
+</update>
+
+<insert id="InsertVipConsumeInfo">
+insert into VipConsumeInfo (SellerName,VipName,Balance,Integral) values (#{SellerName},#{VipName},0,0);
+</insert>
+
+<select id="QueryVipBasicInfo" resultMap="resultMap_QueryVipBasicInfo" parameterType="VipBasicInfo">
+select * from VipBasicInfo where SellerName=#{SellerName} and VipName=#{VipName} 
+</select>
+
+
+</mapper>
